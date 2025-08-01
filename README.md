@@ -70,6 +70,70 @@ DAFT_API_KEY=           # https://api.daft.ie/doc/v3/
 # ... etc
 ```
 
+## 🔐 Environment Files Policy
+
+### File Types and Commit Policy
+
+| File Pattern | Purpose | Commit to Git? | Contains Secrets? |
+|--------------|---------|----------------|-------------------|
+| `.env.example` | Template with placeholder values | ✅ **YES** | ❌ No |
+| `.env.sandbox` | Safe sandbox/demo configuration | ✅ **YES** | ❌ No |
+| `.env` | Local development with real API keys | ❌ **NEVER** | ✅ Yes |
+| `.env.local` | Local overrides | ❌ **NEVER** | ✅ Yes |
+| `.env.production` | Production secrets | ❌ **NEVER** | ✅ Yes |
+| `.env.test` | Test environment | ❌ **NEVER** | ✅ Maybe |
+
+### Security Rules
+
+**🚨 CRITICAL: Never commit files containing real API keys, tokens, or secrets!**
+
+1. **Safe to Commit:**
+   - `.env.example` - Contains placeholder values like `your_api_key_here`
+   - `.env.sandbox` - Contains demo/public API endpoints only
+
+2. **NEVER Commit:**
+   - `.env` - Your personal development API keys
+   - `.env.local` - Local environment overrides
+   - `.env.production` - Production secrets
+   - `.env.test` - May contain test API keys
+
+3. **Protected by `.gitignore`:**
+   ```bash
+   # dotenv environment variables file - NEVER commit secrets!
+   .env
+   .env.local
+   .env.development.local
+   .env.test.local  
+   .env.production.local
+   .env.test
+   
+   # Allow example and sandbox files to be committed
+   !.env.example
+   !.env.sandbox
+   ```
+
+### Setup Process
+
+1. **Copy template:** `cp .env.example .env`
+2. **Add real API keys** to your local `.env` file
+3. **Never commit** your `.env` file
+4. **Update `.env.example`** when adding new environment variables (with placeholder values)
+
+### Workspace-Specific Configuration
+
+Each workspace (frontend, graphql-server) can have its own environment files:
+
+```bash
+├── .env.example              # Root-level shared config
+├── .env.sandbox             # Sandbox configuration  
+├── frontend/
+│   ├── .env.example         # Frontend-specific template
+│   └── .env                 # Your frontend config (not committed)
+├── graphql-server/
+│   ├── .env.example         # Server-specific template  
+│   └── .env                 # Your server config (not committed)
+```
+
 ## Usage
 
 ### GraphQL Playground
