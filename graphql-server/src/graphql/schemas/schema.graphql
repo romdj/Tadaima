@@ -1,0 +1,121 @@
+type Property {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+  currency: String!
+  propertyType: PropertyType!
+  listingType: ListingType!
+  bedrooms: Int
+  bathrooms: Int
+  area: Float
+  areaUnit: String
+  address: Address!
+  coordinates: Coordinates
+  images: [String!]!
+  source: PropertySource!
+  url: String!
+  dateAdded: String!
+  dateUpdated: String
+  features: [String!]
+  energyClass: String
+  isActive: Boolean!
+}
+
+type Address {
+  street: String
+  city: String!
+  region: String
+  postalCode: String
+  country: String!
+}
+
+type Coordinates {
+  latitude: Float!
+  longitude: Float!
+}
+
+type PropertySource {
+  name: String!
+  country: Country!
+  website: String!
+  logoUrl: String
+}
+
+type Country {
+  code: String!
+  name: String!
+  flag: String
+}
+
+enum PropertyType {
+  APARTMENT
+  HOUSE
+  VILLA
+  TOWNHOUSE
+  STUDIO
+  COMMERCIAL
+  LAND
+  OTHER
+}
+
+enum ListingType {
+  FOR_SALE
+  FOR_RENT
+  SHORT_TERM_RENTAL
+}
+
+type PropertySearchFilters {
+  minPrice: Float
+  maxPrice: Float
+  propertyType: PropertyType
+  listingType: ListingType
+  minBedrooms: Int
+  maxBedrooms: Int
+  minBathrooms: Int
+  maxBathrooms: Int
+  minArea: Float
+  maxArea: Float
+  country: String
+  city: String
+  region: String
+}
+
+type PropertySearchResult {
+  properties: [Property!]!
+  totalCount: Int!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type ApiStatus {
+  source: String!
+  isOnline: Boolean!
+  lastChecked: String!
+  rateLimitRemaining: Int
+  rateLimitReset: String
+}
+
+type Query {
+  properties(
+    filters: PropertySearchFilters
+    page: Int = 1
+    limit: Int = 20
+    sortBy: String = "dateAdded"
+    sortOrder: String = "DESC"
+  ): PropertySearchResult!
+  
+  property(id: ID!): Property
+  
+  countries: [Country!]!
+  
+  propertySources: [PropertySource!]!
+  
+  apiStatus: [ApiStatus!]!
+}
+
+type Mutation {
+  refreshPropertyData(sourceId: ID): Boolean!
+  
+  syncProperty(propertyId: ID!): Property
+}
