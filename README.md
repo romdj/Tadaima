@@ -20,15 +20,15 @@ A modern property search aggregator that searches across multiple European real 
 
 ### Active APIs (8 sources)
 - **ImmoScout24** (Germany) 🇩🇪
-- **Idealista** (Spain, Italy, Portugal) 🇪🇸🇮🇹🇵🇹  
+
+### Planned Integrations
+- **Idealista** (Spain, Italy, Portugal) 🇪🇸🇮🇹🇵🇹
 - **Daft** (Ireland) 🇮🇪
 - **FINN.no** (Norway) 🇳🇴
 - **Hemnet** (Sweden) 🇸🇪
 - **Immoweb** (Belgium) 🇧🇪
 - **Otodom** (Poland) 🇵🇱
 - **Ingatlan** (Hungary) 🇭🇺
-
-### Planned Integrations
 - Rightmove (UK), Funda (Netherlands), SeLoger (France), and more
 
 ## Architecture
@@ -81,11 +81,11 @@ Visit `http://localhost:4000` for the GraphQL playground.
 # Search properties
 query SearchProperties {
   properties(
-    filters: { 
-      country: "DE", 
-      minPrice: 200000, 
+    filters: {
+      country: "DE",
+      minPrice: 200000,
       maxPrice: 500000,
-      propertyType: APARTMENT 
+      propertyType: APARTMENT
     }
     page: 1, limit: 10
   ) {
@@ -99,7 +99,7 @@ query SearchProperties {
   }
 }
 
-# Get countries & API status  
+# Get countries & API status
 query Metadata {
   countries { code, name, flag }
   apiStatus { source, isOnline }
@@ -114,7 +114,7 @@ Visit `http://localhost:5173` for the Svelte application.
 ### Scripts
 ```bash
 npm run build           # Build all packages
-npm run test           # Run all tests  
+npm run test           # Run all tests
 npm run lint           # Lint all packages
 npm run check          # TypeScript checks
 npm run health         # Health check server
@@ -124,7 +124,7 @@ npm run health         # Health check server
 ```
 tadaima/
 ├── graphql-server/    # GraphQL API aggregator
-├── frontend/          # Svelte application  
+├── frontend/          # Svelte application
 ├── shared/           # Shared types & config
 └── docs/            # Documentation
 ```
