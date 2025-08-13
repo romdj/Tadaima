@@ -1,6 +1,8 @@
 name: Tadaima CI
 
 on:
+  # Trunk-based development: CI runs on every push to main and PRs to main
+  # Short-lived feature branches should be merged quickly (< 1 day)
   pull_request:
     branches: [ main ]
     paths-ignore:
@@ -15,7 +17,8 @@ on:
       - '.claude/**'
 
 jobs:
-  # Build and test - simple CI for early development phase
+  # Trunk-based CI: Fast feedback loop for main branch commits and PRs
+  # All commits to main must pass these checks
   build-and-test:
     runs-on: ubuntu-latest
     permissions:
